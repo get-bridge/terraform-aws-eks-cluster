@@ -63,7 +63,7 @@ output "eks_cluster_ipv4_service_cidr" {
     The IPv4 CIDR block that Kubernetes pod and service IP addresses are assigned from
     if `kubernetes_network_ipv6_enabled` is set to false. If set to true this output will be null.
     EOT
-  value       = one(aws_eks_cluster.default[*].kubernetes_network_config[0].service_ipv4_cidr)
+  value       = aws_eks_cluster.default[0].kubernetes_network_config[0].service_ipv4_cidr
 }
 
 output "kubernetes_config_map_id" {
