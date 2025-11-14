@@ -58,6 +58,14 @@ output "eks_cluster_role_arn" {
   value       = join("", aws_iam_role.default.*.arn)
 }
 
+output "eks_cluster_ipv4_service_cidr" {
+  description = <<-EOT
+    The IPv4 CIDR block that Kubernetes pod and service IP addresses are assigned from
+    if `kubernetes_network_ipv6_enabled` is set to false. If set to true this output will be null.
+    EOT
+  value       = one(aws_eks_cluster.default[*].kubernetes_network_config[0].service_ipv4_cidr)
+}
+
 output "kubernetes_config_map_id" {
   description = "ID of `aws-auth` Kubernetes ConfigMap"
   value       = var.kubernetes_config_map_ignore_role_changes ? join("", kubernetes_config_map.aws_auth_ignore_changes.*.id) : join("", kubernetes_config_map.aws_auth.*.id)
